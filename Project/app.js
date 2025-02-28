@@ -71,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 lossesCounter++;
                 displayImageChoice(userChoice, computerChoice);
                 document.querySelector('#result').innerHTML = 'You Lose!';
-                console.log('Computer win');
                 break;
             case (userChoice === 'paper' && computerChoice === 'rock'):
             case (userChoice === 'rock' && computerChoice === 'scissors'):
