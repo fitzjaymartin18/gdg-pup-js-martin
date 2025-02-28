@@ -9,10 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let lossesCounter = 0;
     let tiesCounter = 0;
 
-    // Get user choice
+    // Get user choice and computer choice
     let userChoice = '';
     let computerChoice = '';
 
+    // Onclick functions
     document.querySelector('#rock').onclick = () => {
         userChoice = 'rock';
         computerChoice = generateComputerChoice();
@@ -37,10 +38,21 @@ document.addEventListener('DOMContentLoaded', function() {
         lossesCounter = 0;
         tiesCounter = 0;
 
+        document.querySelector('.choices').style.display = "none";
+        document.querySelector('#resetButton').disabled = true;
+        document.querySelector('#startButton').disabled = false;
+
         displayScores();
         document.querySelector('#result').innerHTML = 'Choose your weapon!';
         displayImageChoice();
     }
+    
+    document.querySelector('#startButton').onclick = () => {
+        document.querySelector('.choices').style.display = "flex";
+        document.querySelector('#startButton').disabled = true;
+        document.querySelector('#resetButton').disabled = false;
+    }
+
 
     // Generate computer choice 
     function generateComputerChoice() {
@@ -50,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return choices[randChoice];
     }
 
+    // Determine the winner
     function determineWinner() {
         switch (true) {
             case (userChoice === 'rock' && computerChoice === 'paper'):
@@ -57,35 +70,26 @@ document.addEventListener('DOMContentLoaded', function() {
             case (userChoice === 'paper' && computerChoice === 'scissors'):
                 lossesCounter++;
                 displayImageChoice(userChoice, computerChoice);
-                
                 document.querySelector('#result').innerHTML = 'You Lose!';
                 console.log('Computer win');
-                // console.log(`user: ${userChoice}`);
-                // console.log(`cp: ${computerChoice}`);
                 break;
             case (userChoice === 'paper' && computerChoice === 'rock'):
             case (userChoice === 'rock' && computerChoice === 'scissors'):
             case (userChoice === 'scissors' && computerChoice === 'paper'):
                 winsCounter++;
                 displayImageChoice(userChoice, computerChoice);
-
                 document.querySelector('#result').innerHTML = 'You win!';
-                // console.log(`user: ${userChoice}`);
-                // console.log(`cp: ${computerChoice}`);
                 break;
             case (userChoice === '' && computerChoice === ''):
                 break;
             default:
                 displayImageChoice(userChoice, computerChoice);
                 tiesCounter++;
-                
                 document.querySelector('#result').innerHTML = 'Draw!';
-                console.log('Draw');
-                // console.log(`user: ${userChoice}`);
-                // console.log(`cp: ${computerChoice}`);
             }
     }
 
+    // Update the user and computer image with user and computer choice image
     function displayImageChoice(user = "user", computer = "computer") {
         userChoiceDisplay = document.querySelector('#userChoice');
         computerChoiceDisplay = document.querySelector('#computerChoice');
@@ -94,11 +98,10 @@ document.addEventListener('DOMContentLoaded', function() {
         computerChoiceDisplay.innerHTML = `<img src="./assets/images/icon-${computer}.png" alt="${computer}" class='choice--img'/>`
     }   
 
+    // Display the score
     function displayScores() {
         wins.innerHTML = winsCounter;
         losses.innerHTML = lossesCounter;
         ties.innerHTML = tiesCounter;
     }
-    
-
 });
